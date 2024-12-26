@@ -3,7 +3,7 @@
 /**
  * Class Car_Gallery_Metabox
  *
- * Adds a metabox for managing a gallery of images for any post type.
+ * Adds a metabox for managing a gallery of images for cars post type.
  */
 
 class Car_Gallery_Metabox
