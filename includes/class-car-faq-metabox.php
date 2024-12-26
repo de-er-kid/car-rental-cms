@@ -9,4 +9,8 @@
 
 class Car_FAQ_Metabox
 {
+
+    public function __construct() {}
+
+    public function add_faq_meta_box() {}
 }
