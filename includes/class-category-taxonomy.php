@@ -13,7 +13,6 @@ public function __construct() {
     add_filter('term_link', array($this, 'modify_category_link'), 10, 3);
 }
 
-// Register Category Taxonomy
 public function register_category_taxonomy() {
     $labels = array(
         'name' => __('Categories', 'car-rental-cmc'),
@@ -26,13 +25,12 @@ public function register_category_taxonomy() {
         'show_ui' => true,
         'show_admin_column' => true,
         'query_var' => true,
-        'show_in_rest' => true, // Gutenberg support
+        'show_in_rest' => true,
     );
 
     register_taxonomy('category', 'cars', $args);
 }
 
-// Enqueue Media Uploader for category image
 public function enqueue_media_uploader($hook) {
     if (in_array($hook, array('edit-tags.php', 'term.php'))) {
         wp_enqueue_media();
@@ -43,7 +41,6 @@ public function enqueue_media_uploader($hook) {
     }
 }
 
-// Add Category Image Field
 public function add_category_image_field($taxonomy) {
     wp_nonce_field('category_image_nonce', 'category_image_nonce');
     ?>
@@ -62,7 +59,6 @@ public function add_category_image_field($taxonomy) {
     <?php
 }
 
-// Edit Category Image Field
 public function edit_category_image_field($term) {
     wp_nonce_field('category_image_nonce', 'category_image_nonce');
     $image_id = get_term_meta($term->term_id, 'category_image', true);
@@ -89,19 +85,15 @@ public function edit_category_image_field($term) {
     <?php
 }
 
-// Save Category Image Field
 public function save_category_image_field($term_id) {
-    // Check nonce for security
     if (!isset($_POST['category_image_nonce']) || !wp_verify_nonce($_POST['category_image_nonce'], 'category_image_nonce')) {
         return;
     }
 
-    // Check user capabilities
     if (!current_user_can('manage_categories')) {
         return;
     }
 
-    // Sanitize and save the image ID
     if (isset($_POST['category_image'])) {
         $image_id = intval($_POST['category_image']);
         
@@ -114,30 +106,25 @@ public function save_category_image_field($term_id) {
 }
 
 public function display_category_image($atts) {
-    // Define default attributes
     $atts = shortcode_atts(
         array(
-            'id' => '', // Term ID for category
+            'id' => '',
         ), 
         $atts, 
         'category_image'
     );
 
-    // Placeholder image URL
     $placeholder_url = 'https://via.placeholder.com/300x300?text=No+Image'; // You can change this to your desired placeholder image URL.
 
-    // Check if ID is provided
     if (empty($atts['id'])) {
         return 'Please provide a valid Category ID.';
     }
 
-    // Fetch the Category Image
     $category_image_url = get_term_meta($atts['id'], '_category_image', true);
     if ($category_image_url) {
         return '<div class="category-image"><img src="' . esc_url($category_image_url) . '" alt="Category Image" /></div>';
     }
 
-    // If no image found, show placeholder with .2 opacity
     return '<div class="category-image" style="opacity: 0.2;"><img src="' . esc_url($placeholder_url) . '" alt="No Image" /></div>';
 }
 

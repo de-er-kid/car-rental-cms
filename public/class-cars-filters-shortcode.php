@@ -7,11 +7,9 @@ class CarFiltersShortcode {
     }
 
     public function render_filters($atts) {
-        // Get current filter values from query string
         $current_category = isset($_GET['car_category']) ? sanitize_text_field($_GET['car_category']) : '';
         $current_brand = isset($_GET['car_brand']) ? sanitize_text_field($_GET['car_brand']) : '';
 
-        // Start output buffering
         ob_start();
         ?>
 
@@ -24,7 +22,7 @@ class CarFiltersShortcode {
                     <?php
                     $categories = get_terms([
                         'taxonomy' => 'category',
-                        'hide_empty' => false, // Show all terms
+                        'hide_empty' => false,
                     ]);
 
                     if (!is_wp_error($categories)) {
@@ -43,7 +41,7 @@ class CarFiltersShortcode {
                     <?php
                     $brands = get_terms([
                         'taxonomy' => 'brands',
-                        'hide_empty' => false, // Show all terms
+                        'hide_empty' => false,
                     ]);
 
                     if (!is_wp_error($brands)) {
@@ -64,11 +62,9 @@ class CarFiltersShortcode {
     }
 
     public function filter_cars_archive($query) {
-        // Apply only on cars archive and main query
         if (!is_admin() && $query->is_main_query() && is_post_type_archive('cars')) {
             $tax_query = [];
 
-            // Filter by car category
             if (!empty($_GET['car_category'])) {
                 $tax_query[] = [
                     'taxonomy' => 'category',
@@ -77,7 +73,6 @@ class CarFiltersShortcode {
                 ];
             }
 
-            // Filter by car brand
             if (!empty($_GET['car_brand'])) {
                 $tax_query[] = [
                     'taxonomy' => 'brands',
@@ -93,5 +88,4 @@ class CarFiltersShortcode {
     }
 }
 
-// Initialize the shortcode class
 new CarFiltersShortcode();

@@ -2,10 +2,10 @@
 
 class Car_Rental {
 
-    public function __construct() {
-        // Constructor logic if needed
-		add_shortcode('taxonomy_loop', array($this, 'taxonomy_loop_shortcode'));
-    }
+    // public function __construct() {
+    //     // Constructor logic if needed
+	// 	add_shortcode('taxonomy_loop', array($this, 'taxonomy_loop_shortcode'));
+    // }
 
     public function init() {
         add_action('init', array($this, 'register_cars_post_type'));
@@ -71,76 +71,76 @@ class Car_Rental {
     //     new Category_Taxonomy();
     // }
 
-	public function taxonomy_loop_shortcode($atts) {
-		// Define default attributes
-		$atts = shortcode_atts(
-			array(
-				'taxonomy' => 'category', // Default taxonomy
-			), 
-			$atts, 
-			'taxonomy_loop'
-		);
+	// public function taxonomy_loop_shortcode($atts) {
+	// 	// Define default attributes
+	// 	$atts = shortcode_atts(
+	// 		array(
+	// 			'taxonomy' => 'category', // Default taxonomy
+	// 		), 
+	// 		$atts, 
+	// 		'taxonomy_loop'
+	// 	);
 	
-		// Get the taxonomy from the attributes
-		$taxonomy = $atts['taxonomy'];
+	// 	// Get the taxonomy from the attributes
+	// 	$taxonomy = $atts['taxonomy'];
 	
-		// Fetch all terms from the specified taxonomy
-		$terms = get_terms(array(
-			'taxonomy' => $taxonomy,
-			'hide_empty' => false, // Show all terms, even empty ones
-			'exclude' => array(get_option('default_category')), // Exclude 'Uncategorized' (usually ID 1 for category)
-			'orderby' => 'id',
-			'order' => 'ASC',
-		));
+	// 	// Fetch all terms from the specified taxonomy
+	// 	$terms = get_terms(array(
+	// 		'taxonomy' => $taxonomy,
+	// 		'hide_empty' => false, // Show all terms, even empty ones
+	// 		'exclude' => array(get_option('default_category')), // Exclude 'Uncategorized' (usually ID 1 for category)
+	// 		'orderby' => 'id',
+	// 		'order' => 'ASC',
+	// 	));
 	
-		// Check if there are any terms
-		if (empty($terms) || is_wp_error($terms)) {
-			return 'No terms found.';
-		}
+	// 	// Check if there are any terms
+	// 	if (empty($terms) || is_wp_error($terms)) {
+	// 		return 'No terms found.';
+	// 	}
 	
-		// Start the output string
-		$output = '<div class="taxonomy-loop">';
+	// 	// Start the output string
+	// 	$output = '<div class="taxonomy-loop">';
 	
-		// Loop through each term
-		foreach ($terms as $term) {
-			// Get the image URL (brand logo or category image)
-			$image_url = '';
-			if ($taxonomy === 'brands') {
-				$image_id = get_term_meta($term->term_id, 'brands_logo', true);
-				if ($image_id) {
-					$image_url = wp_get_attachment_image_url($image_id, 'full');
-				}
-			} else if ($taxonomy === 'category') {
-				$image_id = get_term_meta($term->term_id, 'category_image', true);
-				if ($image_id) {
-					$image_url = wp_get_attachment_image_url($image_id, 'full');
-				}
-			}
+	// 	// Loop through each term
+	// 	foreach ($terms as $term) {
+	// 		// Get the image URL (brand logo or category image)
+	// 		$image_url = '';
+	// 		if ($taxonomy === 'brands') {
+	// 			$image_id = get_term_meta($term->term_id, 'brands_logo', true);
+	// 			if ($image_id) {
+	// 				$image_url = wp_get_attachment_image_url($image_id, 'full');
+	// 			}
+	// 		} else if ($taxonomy === 'category') {
+	// 			$image_id = get_term_meta($term->term_id, 'category_image', true);
+	// 			if ($image_id) {
+	// 				$image_url = wp_get_attachment_image_url($image_id, 'full');
+	// 			}
+	// 		}
 	
-			// Set the default placeholder if no image exists
-			if (!$image_url) {
-				$image_url = 'https://via.placeholder.com/300x300?text=No+Image';
-			}
+	// 		// Set the default placeholder if no image exists
+	// 		if (!$image_url) {
+	// 			$image_url = 'https://via.placeholder.com/300x300?text=No+Image';
+	// 		}
 	
-			// Construct the term's link
-			$term_link = get_term_link($term);
+	// 		// Construct the term's link
+	// 		$term_link = get_term_link($term);
 	
-			// Add each term's content to the output
-			$output .= '<div class="taxonomy-term">';
-			$output .= '<a href="' . esc_url($term_link) . '" class="taxonomy-term-link">';
-			$output .= '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($term->name) . '" class="taxonomy-term-image" />';
-			// $output .= ($taxonomy === 'category') ? '<h3 class="taxonomy-term-title">' . esc_html($term->name) . '</h3>' : '';
-			// now customer needs title for both category and brands
-			$output .= '<h3 class="taxonomy-term-title">' . esc_html($term->name) . '</h3>';
-			$output .= '</a>';
-			$output .= '</div>';
-		}
+	// 		// Add each term's content to the output
+	// 		$output .= '<div class="taxonomy-term">';
+	// 		$output .= '<a href="' . esc_url($term_link) . '" class="taxonomy-term-link">';
+	// 		$output .= '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($term->name) . '" class="taxonomy-term-image" />';
+	// 		// $output .= ($taxonomy === 'category') ? '<h3 class="taxonomy-term-title">' . esc_html($term->name) . '</h3>' : '';
+	// 		// now customer needs title for both category and brands
+	// 		$output .= '<h3 class="taxonomy-term-title">' . esc_html($term->name) . '</h3>';
+	// 		$output .= '</a>';
+	// 		$output .= '</div>';
+	// 	}
 	
-		// Close the output string
-		$output .= '</div>';
+	// 	// Close the output string
+	// 	$output .= '</div>';
 	
-		return $output;
-	}
+	// 	return $output;
+	// }
 	
 	
 }

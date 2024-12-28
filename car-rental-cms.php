@@ -25,13 +25,20 @@ require_once CAR_RENTAL_CMS_PATH . 'includes/class-category-taxonomy.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-features.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-cars-meta-fields.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-gallery-metabox.php';
+require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-faq-metabox.php';
+require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-benifits-metabox.php';
+require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-why-chose-meta.php';
 
 /**
  * Include shortcode files for frontend
  */
+require_once CAR_RENTAL_CMS_PATH . 'public/class-taxonomy-loop-shortcode.php';
 require_once CAR_RENTAL_CMS_PATH . 'public/class-car-gallery-shortcode.php';
 require_once CAR_RENTAL_CMS_PATH . 'public/class-car-features-shortcode.php';
 require_once CAR_RENTAL_CMS_PATH . 'public/class-cars-filters-shortcode.php';
+require_once CAR_RENTAL_CMS_PATH . 'public/class-car-custom-image.php';
+require_once CAR_RENTAL_CMS_PATH . 'public/class-car-faq-shortcode.php';
+require_once CAR_RENTAL_CMS_PATH . 'public/class-car-enquiry-links.php';
 
 /**
  * Initialize the Car Rental CMS.
@@ -41,13 +48,15 @@ function car_rental_cms_init()
     $car_rental = new Car_Rental();
     $car_rental->init();
 
-    // Initialize other modules
     new Settings_Page();
     new Brands_Taxonomy();
     new Category_Taxonomy();
     new Cars_Meta_Fields();
     new Car_Gallery_Metabox();
     new Car_Features_Taxonomy();
+    new Car_FAQ_Metabox();
+    new Car_Benifits_Metabox();
+    new Cars_Why_Chose_Meta();
 }
 add_action('plugins_loaded', 'car_rental_cms_init');
 

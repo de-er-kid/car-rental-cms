@@ -23,7 +23,8 @@ class Cars_Meta_Fields
 
     public function render_car_meta_box($post)
     {
-        $car_make = get_post_meta($post->ID, '_car_make', true);
+        $terms = wp_get_post_terms($post->ID, 'brands');
+        $car_make = !empty($terms) ? $terms[0]->term_id : '';
         $car_model = get_post_meta($post->ID, '_car_model', true);
         $security_deposit = get_post_meta($post->ID, '_security_deposit', true);
         $daily_rent = get_post_meta($post->ID, '_daily_rent', true);
@@ -74,8 +75,22 @@ class Cars_Meta_Fields
 
         wp_nonce_field('save_car_meta_fields', 'car_meta_nonce');
 
-        echo '<label for="car_make">' . __('Make', 'car-rental-cmc') . '</label>';
-        echo '<input type="text" id="car_make" name="car_make" value="' . esc_attr($car_make) . '" class="widefat" />';
+        $brands = get_terms(array(
+            'taxonomy' => 'brands',
+            'hide_empty' => false,
+        ));
+        
+        echo '<label for="car_make">' . __('Brand', 'car-rental-cmc') . '</label>';
+        echo '<select id="car_make" name="car_make" class="widefat">';
+        echo '<option value="">' . __('Select a brand', 'car-rental-cmc') . '</option>';
+        
+        foreach ($brands as $brand) {
+            echo '<option value="' . esc_attr($brand->term_id) . '" ' . selected($car_make, $brand->term_id, false) . '>';
+            echo esc_html($brand->name);
+            echo '</option>';
+        }
+        
+        echo '</select>';
 
         echo '<label for="car_model">' . __('Model', 'car-rental-cmc') . '</label>';
         echo '<input type="text" id="car_model" name="car_model" value="' . esc_attr($car_model) . '" class="widefat" />';
@@ -122,7 +137,6 @@ class Cars_Meta_Fields
             return;
         }
 
-        // Prevent autosave
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
         }
@@ -131,8 +145,9 @@ class Cars_Meta_Fields
             return;
         }
 
-        if (isset($_POST['car_make'])) {
-            update_post_meta($post_id, '_car_make', sanitize_text_field($_POST['car_make']));
+        if (isset($_POST['car_make']) && !empty($_POST['car_make'])) {
+            $brand_term_id = absint($_POST['car_make']);
+            wp_set_object_terms($post_id, $brand_term_id, 'brands');
         }
         if (isset($_POST['car_model'])) {
             update_post_meta($post_id, '_car_model', sanitize_text_field($_POST['car_model']));

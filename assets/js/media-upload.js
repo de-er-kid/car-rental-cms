@@ -63,4 +63,54 @@ jQuery(document).ready(function($) {
     // Initialize file upload functionality for both Brand Logo and Category Image
     handleMediaUpload('#brands_logo', '#brands_logo_preview', '#upload_brands_logo_button', '#remove_brands_logo_button');
     handleMediaUpload('#category_image', '#category_image_preview', '#upload_category_image_button', '#remove_category_image_button');
+
+
+
+
+    // let faqIndex = $('.faq-group').length;
+
+
+
+    // $('#add_faq').on('click', function() {
+
+    //     const template = `
+
+    //         <div class="faq-group">
+
+    //             <p>
+
+    //                 <label>Question</label>
+
+    //                 <input type="text" class="widefat" name="car_faq[question][]" value="" />
+
+    //             </p>
+
+    //             <p>
+
+    //                 <label>Answer</label>
+
+    //                 <textarea name="car_faq[answer][]"></textarea>
+
+    //             </p>
+
+    //             <button type="button" class="remove-faq button button-primary button-large">Remove</button>
+
+    //         </div>
+
+    //     `;
+
+    //     $('#car_faqs_container').append(template);
+
+    //     faqIndex++;
+
+    // });
+
+
+
+    // $(document).on('click', '.remove-faq', function() {
+
+    //     $(this).closest('.faq-group').remove();
+
+    // });
+
 });
