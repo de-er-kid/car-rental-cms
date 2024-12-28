@@ -12,5 +12,11 @@ class Car_FAQ_Metabox
 
     public function __construct() {}
 
-    public function add_faq_meta_box() {}
+    /**
+     * Add meta box for FAQ, repeater field set: title, description(WYSIWYG)
+     */
+
+    public function add_faq_meta_box() {
+        add_meta_box("", __("",""), array( $this,""),
+    }
 }

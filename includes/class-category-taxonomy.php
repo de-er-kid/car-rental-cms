@@ -10,6 +10,7 @@ public function __construct() {
     add_action('create_category', array($this, 'save_category_image_field'));
     add_action('admin_enqueue_scripts', array($this, 'enqueue_media_uploader'));
     add_shortcode('category_image', array($this, 'display_category_image'));
+    add_filter('term_link', array($this, 'modify_category_link'), 10, 3);
 }
 
 // Register Category Taxonomy
@@ -138,6 +139,14 @@ public function display_category_image($atts) {
 
     // If no image found, show placeholder with .2 opacity
     return '<div class="category-image" style="opacity: 0.2;"><img src="' . esc_url($placeholder_url) . '" alt="No Image" /></div>';
+}
+
+
+public function modify_category_link($url, $term, $taxonomy) {
+    if ($taxonomy === 'category') {
+        $url = home_url('car-list/?car_category=' . $term->slug);
+    }
+    return $url;
 }
 
 }

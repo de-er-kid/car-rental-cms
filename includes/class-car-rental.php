@@ -129,7 +129,9 @@ class Car_Rental {
 			$output .= '<div class="taxonomy-term">';
 			$output .= '<a href="' . esc_url($term_link) . '" class="taxonomy-term-link">';
 			$output .= '<img src="' . esc_url($image_url) . '" alt="' . esc_attr($term->name) . '" class="taxonomy-term-image" />';
-			$output .= ($taxonomy === 'category') ? '<h3 class="taxonomy-term-title">' . esc_html($term->name) . '</h3>' : '';
+			// $output .= ($taxonomy === 'category') ? '<h3 class="taxonomy-term-title">' . esc_html($term->name) . '</h3>' : '';
+			// now customer needs title for both category and brands
+			$output .= '<h3 class="taxonomy-term-title">' . esc_html($term->name) . '</h3>';
 			$output .= '</a>';
 			$output .= '</div>';
 		}

@@ -71,7 +71,34 @@ function enqueue_frontend_assets()
     }
 
     // Splide
-    wp_enqueue_style('splide-css', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css', [], '4.0.0');
-    wp_enqueue_script('splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js', [], '4.0.0', true);
+    // wp_enqueue_style('splide-css', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css', [], '4.0.0');
+    // wp_enqueue_script('splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js', [], '4.0.0', true);
+
+    // Enqueue Tiny Slider CSS
+    wp_enqueue_style(
+        'tiny-slider-css', 
+        'https://cdn.jsdelivr.net/npm/tiny-slider@2.9.4/dist/tiny-slider.css', 
+        [], 
+        '2.9.4'
+    );
+
+    // Enqueue Tiny Slider JS
+    wp_enqueue_script(
+        'tiny-slider-js', 
+        'https://cdn.jsdelivr.net/npm/tiny-slider@2.9.4/dist/min/tiny-slider.js', 
+        [], 
+        '2.9.4', 
+        true // Load in the footer
+    );
+
+    // JS File
+    // wp_enqueue_script('car-rental-cms-frontend-js', CAR_RENTAL_CMS_URL . 'assets/js/frontend.js', array('jquery'), null, true);
+
+    // int-tel-input
+    wp_enqueue_style('intl-tel-input-css', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css', array(), null);
+    wp_enqueue_script('intl-tel-input-js', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js', array('jquery'), null, true);
+
+    // inline initialization js for intl-tel-input
+    wp_enqueue_script('intl-tel-input-init-js', CAR_RENTAL_CMS_URL . 'assets/js/intl-tel-input-init.js', ['intl-tel-input-js'], null, true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_frontend_assets');
