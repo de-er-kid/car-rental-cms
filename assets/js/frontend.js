@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
   const slider = tns({
-    container: ".taxonomy-loop",
-    items: 8,
+    container: "#brands-slide .taxonomy-loop",
+    items: 6,
     slideBy: "page",
     autoplay: true,
     autoplayTimeout: 3000,
@@ -11,13 +11,27 @@ jQuery(document).ready(function ($) {
     controls: false,
     nav: false,
     responsive: {
-      0: { items: 5 },
-      768: { items: 6 },
+      0: { items: 4 },
+      768: { items: 4 },
       1024: { items: 6 },
-      1440: { items: 7 },
+      1440: { items: 8 },
     },
   });
-
+  
+  document.querySelectorAll(".car-images-slider").forEach((slider) => {
+    tns({
+      container: slider,
+      items: 1,
+      slideBy: "page",
+      autoplay: true,
+      autoplayButtonOutput: false,
+      loop: true,
+      nav: false,
+      controls: true,
+      controlsText: ["<", ">"],
+    });
+  });
+  
   // $.ajax({
   //     url: 'your-endpoint-url',
   //     method: 'GET',
@@ -28,4 +42,5 @@ jQuery(document).ready(function ($) {
   //         console.error('AJAX request failed:', error);
   //     }
   // });
+
 });

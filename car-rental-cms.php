@@ -28,6 +28,7 @@ require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-gallery-metabox.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-faq-metabox.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-benifits-metabox.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-why-chose-meta.php';
+require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-subheading-metabox.php';
 
 /**
  * Include shortcode files for frontend
@@ -39,6 +40,8 @@ require_once CAR_RENTAL_CMS_PATH . 'public/class-cars-filters-shortcode.php';
 require_once CAR_RENTAL_CMS_PATH . 'public/class-car-custom-image.php';
 require_once CAR_RENTAL_CMS_PATH . 'public/class-car-faq-shortcode.php';
 require_once CAR_RENTAL_CMS_PATH . 'public/class-car-enquiry-links.php';
+require_once CAR_RENTAL_CMS_PATH . 'public/class-car-loop-galley.php';
+require_once CAR_RENTAL_CMS_PATH . 'public/class-class-car-tax-image.php';
 
 /**
  * Initialize the Car Rental CMS.
@@ -57,6 +60,7 @@ function car_rental_cms_init()
     new Car_FAQ_Metabox();
     new Car_Benifits_Metabox();
     new Cars_Why_Chose_Meta();
+    new Car_Subheading_Metabox();
 }
 add_action('plugins_loaded', 'car_rental_cms_init');
 
@@ -101,7 +105,7 @@ function enqueue_frontend_assets()
     );
 
     // JS File
-    // wp_enqueue_script('car-rental-cms-frontend-js', CAR_RENTAL_CMS_URL . 'assets/js/frontend.js', array('jquery'), null, true);
+    wp_enqueue_script('car-rental-cms-frontend-js', CAR_RENTAL_CMS_URL . 'assets/js/frontend.js', array('jquery'), null, true);
 
     // int-tel-input
     wp_enqueue_style('intl-tel-input-css', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css', array(), null);
