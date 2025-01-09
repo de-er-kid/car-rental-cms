@@ -6,7 +6,8 @@ class Deals_Taxonomy {
         add_action('created_deals', array($this, 'save_color_meta_field'), 10, 2);
         add_action('deals_edit_form_fields', array($this, 'edit_color_meta_field'), 10, 2);
         add_action('edited_deals', array($this, 'update_color_meta_field'), 10, 2);
-        
+        add_shortcode( 'deals_term', array($this,'render_deals_taxonomy_term') );
+
         // Add scripts and styles for admin
         add_action('admin_enqueue_scripts', array($this, 'enqueue_color_picker'));
     }
@@ -81,4 +82,30 @@ class Deals_Taxonomy {
             delete_term_meta($term_id, 'term-color');
         }
     }
+
+    function render_deals_taxonomy_term() {
+        $terms = get_the_terms( get_the_ID(), 'deals' );
+        
+        if ( $terms && ! is_wp_error( $terms ) ) {
+            if ( count( $terms ) === 1 ) {
+                $term = array_shift( $terms );
+                return '<h4 class="in-deals">' . esc_html( $term->name ) . '</h4>';
+            } else {
+                $primary_term = get_post_meta( get_the_ID(), '_yoast_wpseo_primary_deals', true );
+                
+                if ( $primary_term ) {
+                    $term = get_term( $primary_term, 'deals' );
+                    if ( ! is_wp_error( $term ) ) {
+                        return '<h4>' . esc_html( $term->name ) . '</h4>';
+                    }
+                }
+    
+                $term = array_shift( $terms );
+                return '<h4>' . esc_html( $term->name ) . '</h4>';
+            }
+        }
+    
+        return '';
+    }
+    
 }
