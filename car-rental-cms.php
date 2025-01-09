@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Car Rental CMS
  * Description: Car rental content management system for WordPress.
- * Version: 1.0
+ * Version: 1.7
  * Author: Sinan
  * Text Domain: car-rental-cmc
  */
@@ -29,6 +29,7 @@ require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-faq-metabox.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-benifits-metabox.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-why-chose-meta.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-subheading-metabox.php';
+require_once CAR_RENTAL_CMS_PATH . 'includes/class-deals-taxonomy.php';
 
 /**
  * Include shortcode files for frontend
@@ -61,6 +62,7 @@ function car_rental_cms_init()
     new Car_Benifits_Metabox();
     new Cars_Why_Chose_Meta();
     new Car_Subheading_Metabox();
+    new Deals_Taxonomy();
 }
 add_action('plugins_loaded', 'car_rental_cms_init');
 

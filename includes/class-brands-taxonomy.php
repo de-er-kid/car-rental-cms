@@ -8,6 +8,7 @@ class Brands_Taxonomy {
         add_action('create_brands', array($this, 'save_brands_logo_field'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_media_uploader'));
         add_shortcode('brand_logo', array($this, 'display_brand_logo'));
+		add_filter('term_link', array($this, 'modify_brand_link'), 10, 3);
     }
 
     public function register_brands_taxonomy() {
@@ -137,7 +138,12 @@ class Brands_Taxonomy {
         return '<div class="brand-logo" style="opacity: 0.2;"><img src="' . esc_url($placeholder_url) . '" alt="No Logo" /></div>';
     }
     
-    
+    public function modify_brand_link($url, $term, $taxonomy) {
+		if ($taxonomy === 'brands') {
+			$url = home_url('car-list/?car_brand=' . $term->slug);
+		}
+		return $url;
+	}
     
     
 }
