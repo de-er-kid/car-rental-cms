@@ -30,6 +30,7 @@ require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-benifits-metabox.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-why-chose-meta.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-car-subheading-metabox.php';
 require_once CAR_RENTAL_CMS_PATH . 'includes/class-deals-taxonomy.php';
+require_once CAR_RENTAL_CMS_PATH . 'includes/class-term-order.php';
 
 /**
  * Include shortcode files for frontend
@@ -63,6 +64,7 @@ function car_rental_cms_init()
     new Cars_Why_Chose_Meta();
     new Car_Subheading_Metabox();
     new Deals_Taxonomy();
+    new Term_Order_Metabox();
 }
 add_action('plugins_loaded', 'car_rental_cms_init');
 

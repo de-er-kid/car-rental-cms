@@ -16,13 +16,22 @@ class Taxonomy_Loop_Shortcode
 	
 		$taxonomy = $atts['taxonomy'];
 	
-		$terms = get_terms(array(
+		$args = array(
 			'taxonomy' => $taxonomy,
 			'hide_empty' => false,
-			'exclude' => array(get_option('default_category')),
-			'orderby' => 'id',
-			'order' => 'ASC',
-		));
+			'exclude' => array(get_option('default_category'))
+		);
+		
+		if ($taxonomy == 'category') {
+			$args['meta_key'] = 'term_order';
+			$args['orderby'] = 'meta_value_num';
+			$args['order'] = 'ASC';
+		} else {
+			$args['orderby'] = 'id';
+			$args['order'] = 'ASC';
+		}
+		
+		$terms = get_terms($args);
 	
 		if (empty($terms) || is_wp_error($terms)) {
 			return 'No terms found.';
