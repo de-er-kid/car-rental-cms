@@ -28,7 +28,7 @@ jQuery(document).ready(function ($) {
       0: { items: 4 },
       768: { items: 4 },
       1024: { items: 6 },
-      1440: { items: 8 },
+      1440: { items: 12 },
     },
   });
   

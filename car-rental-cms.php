@@ -5,6 +5,7 @@
  * Description: Car rental content management system for WordPress.
  * Version: 1.8
  * Author: Sinan
+ * Author URI: https://github.com/de-er-kid/
  * Text Domain: car-rental-cmc
  */
 
@@ -93,18 +94,18 @@ function enqueue_frontend_assets()
 
     // Enqueue Tiny Slider CSS
     wp_enqueue_style(
-        'tiny-slider-css', 
-        'https://cdn.jsdelivr.net/npm/tiny-slider@2.9.4/dist/tiny-slider.css', 
-        [], 
+        'tiny-slider-css',
+        'https://cdn.jsdelivr.net/npm/tiny-slider@2.9.4/dist/tiny-slider.css',
+        [],
         '2.9.4'
     );
 
     // Enqueue Tiny Slider JS
     wp_enqueue_script(
-        'tiny-slider-js', 
-        'https://cdn.jsdelivr.net/npm/tiny-slider@2.9.4/dist/min/tiny-slider.js', 
-        [], 
-        '2.9.4', 
+        'tiny-slider-js',
+        'https://cdn.jsdelivr.net/npm/tiny-slider@2.9.4/dist/min/tiny-slider.js',
+        [],
+        '2.9.4',
         true // Load in the footer
     );
 

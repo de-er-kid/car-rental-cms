@@ -1,10 +1,13 @@
 <?php
 declare(strict_types=1);
+
 class ClassCarEnquiryLinks
 {
     private string $whatsappNumber;
     private string $whatsappMessage;
     private string $emailAddress;
+    private string $ccEmails;
+    private string $bccEmails;
     private string $phoneNumber;
 
     public function __construct()
@@ -13,11 +16,16 @@ class ClassCarEnquiryLinks
         $this->whatsappNumber = $enquirySettings['whatsapp_number'] ?? '';
         $this->whatsappMessage = $enquirySettings['whatsapp_message'] ?? '';
         $this->emailAddress = $enquirySettings['email_address'] ?? '';
+        $this->ccEmails = $enquirySettings['cc_email_addresses'] ?? '';
+        $this->bccEmails = $enquirySettings['bcc_email_addresses'] ?? '';
         $this->phoneNumber = $enquirySettings['phone_number'] ?? '';
-   
+
         add_shortcode('car_whatsapp_link', [$this, 'whatsapp_link_shortcode']);
         add_shortcode('car_phone_link', [$this, 'phone_link_shortcode']);
         add_shortcode('car_email_link', [$this, 'email_link_shortcode']);
+        add_shortcode('car_enquiry_email', [$this, 'email_shortcode']);
+        add_shortcode('car_enquiry_cc_emails', [$this, 'cc_emails_shortcode']);
+        add_shortcode('car_enquiry_bcc_emails', [$this, 'bcc_emails_shortcode']);
     }
 
     private function process_message_template($message, $post_id = null) {
@@ -81,6 +89,18 @@ class ClassCarEnquiryLinks
     public function email_link_shortcode($atts) {
         $post_id = isset($atts['post_id']) ? intval($atts['post_id']) : null;
         return $this->get_email_url($post_id);
+    }
+
+    public function email_shortcode() {
+        return $this->emailAddress;
+    }
+
+    public function cc_emails_shortcode() {
+        return $this->ccEmails;
+    }
+
+    public function bcc_emails_shortcode() {
+        return $this->bccEmails;
     }
 }
 
