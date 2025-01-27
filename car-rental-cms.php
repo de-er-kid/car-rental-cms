@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Car Rental CMS
  * Description: Car rental content management system for WordPress.
- * Version: 1.8
+ * Version: 1.8.5
  * Author: Sinan
  * Author URI: https://github.com/de-er-kid/
  * Text Domain: car-rental-cmc
