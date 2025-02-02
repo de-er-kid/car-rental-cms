@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fancyapps/fancybox": "^3.5.7",
     "@fancyapps/ui": "^5.0.36",
     "@splidejs/splide": "^4.1.4",
     "flickity": "^3.0.0",
