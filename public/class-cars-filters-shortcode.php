@@ -4,6 +4,8 @@ class CarFiltersShortcode {
     public function __construct() {
         add_shortcode('car_filters', [$this, 'render_filters']);
         add_action('pre_get_posts', [$this, 'filter_cars_archive']);
+		add_shortcode('listing_title', [$this, 'listing_title_shortcode']);
+
     }
 
     public function render_filters($atts) {
@@ -86,6 +88,34 @@ class CarFiltersShortcode {
             }
         }
     }
+	
+	public function listing_title_shortcode() {
+		$car_category = isset($_GET['car_category']) ? sanitize_text_field($_GET['car_category']) : '';
+		$car_brand = isset($_GET['car_brand']) ? sanitize_text_field($_GET['car_brand']) : '';
+
+		$car_category = $this->format_text($car_category);
+		$car_brand = $this->format_text($car_brand);
+
+		$output = '';
+
+		if (!empty($car_category) && !empty($car_brand)) {
+			$output = $car_category . ' in ' . $car_brand;
+		} elseif (!empty($car_category)) {
+			$output = $car_category;
+		} elseif (!empty($car_brand)) {
+			$output = $car_brand;
+		} else {
+			$output = 'Cars';
+		}
+
+		return $output;
+	}
+
+	private function format_text($text) {
+		$text = str_replace('-', ' ', $text);
+		return ucwords($text);
+	}
+
 }
 
 new CarFiltersShortcode();

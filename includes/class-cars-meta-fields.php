@@ -33,6 +33,7 @@ class Cars_Meta_Fields
         $gear = get_post_meta($post->ID, '_gear', true);
         $seats = get_post_meta($post->ID, '_seats', true);
         $fuel = get_post_meta($post->ID, '_fuel', true);
+		$doors = get_post_meta($post->ID, '_doors', true);
 
         echo '<style>
                 #car_details {.inside {
@@ -128,6 +129,9 @@ class Cars_Meta_Fields
         
         echo '<label for="fuel">' . __('Fuel', 'car-rental-cmc') . '</label>';
         echo '<input type="text" id="fuel" name="fuel" value="' . esc_attr($fuel) . '" class="widefat" />';
+		
+		echo '<label for="doors">' . __('Doors', 'car-rental-cmc') . '</label>';
+        echo '<input type="number" id="doors" name="doors" value="' . esc_attr($doors) . '" class="widefat" />';
         
     }
 
@@ -172,6 +176,9 @@ class Cars_Meta_Fields
         }
         if (isset($_POST['fuel'])) {
             update_post_meta($post_id, '_fuel', sanitize_text_field($_POST['fuel']));
+        }
+		if (isset($_POST['doors'])) {
+            update_post_meta($post_id, '_doors', floatval($_POST['doors']));
         }
     }
 }

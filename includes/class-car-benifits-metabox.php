@@ -56,10 +56,10 @@ class Car_Benifits_Metabox
             <label for="benefit_image"><strong>Image:</strong></label>
             <input type="hidden" name="benefit_image" id="benefit_image" value="<?php echo esc_attr($benefit_image); ?>"
                 style="width:80%;" />
-            <img alt="" src="<?php echo esc_attr($benefit_image); ?>" style="width: 200px" class="benefit-image-preview">
             <button type="button" class="button button-secondary upload_image_button">Upload Image</button>
+			<img alt="" src="<?php echo esc_attr($benefit_image); ?>" style="width: 200px" class="benefit-image-preview">
         </p>
-        <script>
+<!--         <script>
             jQuery(document).ready(function ($) {
                 $('.upload_image_button').on('click', function (e) {
                     e.preventDefault();
@@ -77,7 +77,7 @@ class Car_Benifits_Metabox
                         .open();
                 });
             });
-        </script>
+        </script> -->
         <?php
     }
 

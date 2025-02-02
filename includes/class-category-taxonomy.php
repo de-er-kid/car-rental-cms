@@ -10,7 +10,8 @@ public function __construct() {
     add_action('create_category', array($this, 'save_category_image_field'));
     add_action('admin_enqueue_scripts', array($this, 'enqueue_media_uploader'));
     add_shortcode('category_image', array($this, 'display_category_image'));
-    add_filter('term_link', array($this, 'modify_category_link'), 10, 3);
+//     add_filter('term_link', array($this, 'modify_category_link'), 10, 3);
+	add_action('pre_get_posts', array($this, 'filter_category_archive_query'));
 }
 
 public function register_category_taxonomy() {
@@ -135,5 +136,12 @@ public function modify_category_link($url, $term, $taxonomy) {
     }
     return $url;
 }
+	
+public function filter_category_archive_query($query) {
+    if (!is_admin() && $query->is_main_query() && is_category()) {
+        $query->set('post_type', 'cars');
+    }
+}
+
 
 }

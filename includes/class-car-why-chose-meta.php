@@ -35,10 +35,10 @@ class Cars_Why_Chose_Meta {
         <p>
             <label for="why_content"><?php echo $this->fields['why_content']; ?></label>
             <?php
-            $content = $values['why_content'][0] ?? '';
+            $content = html_entity_decode($values['why_content'][0] ?? '');
             wp_editor($content, 'why_content', [
                 'textarea_name' => 'why_content',
-                'textarea_rows' => 5,
+                'textarea_rows' => 8,
             ]);
             ?>
         </p>
@@ -55,23 +55,28 @@ class Cars_Why_Chose_Meta {
             <img id="preview_image2" src="<?php echo esc_url($values['why_chose_image2'][0] ?? ''); ?>" style="max-width: 300px; margin-top: 10px; display: <?php echo isset($values['why_chose_image2'][0]) ? 'block' : 'none'; ?>;">
         </p>
         <script>
-            jQuery(document).ready(function($) {
-                $('.upload_image_button').click(function(e) {
+            jQuery(document).ready(function ($) {
+                $('.upload_image_button').on('click', function (e) {
                     e.preventDefault();
+
                     let button = $(this);
-                    let input = button.prev('input');
-                    let preview = button.next('img');
+                    let input = button.data('input') ? $(button.data('input')) : button.prev('input');
+                    let preview = button.data('preview') ? $(button.data('preview')) : button.next('img');
+
                     let custom_uploader = wp.media({
                         title: 'Select Image',
-                        button: {
-                            text: 'Use This Image'
-                        },
+                        button: { text: 'Use This Image' },
                         multiple: false
-                    }).on('select', function() {
-                        let attachment = custom_uploader.state().get('selection').first().toJSON();
-                        input.val(attachment.url);
-                        preview.attr('src', attachment.url).show();
-                    }).open();
+                    })
+                        .on('select', function () {
+                            let attachment = custom_uploader.state().get('selection').first().toJSON();
+                            input.val(attachment.url);
+
+                            if (preview.length) {
+                                preview.attr('src', attachment.url).show();
+                            }
+                        })
+                        .open();
                 });
             });
         </script>
@@ -79,23 +84,27 @@ class Cars_Why_Chose_Meta {
     }
 
     public function save_meta_box($post_id) {
+        // Verify nonce
         if (!isset($_POST[$this->meta_box_id . '_nonce']) || !wp_verify_nonce($_POST[$this->meta_box_id . '_nonce'], $this->meta_box_id)) {
             return;
         }
 
+        // Skip autosave
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
         }
 
+        // Check permissions
         if (!current_user_can('edit_post', $post_id)) {
             return;
         }
 
+        // Save fields
         foreach ($this->fields as $field => $label) {
-            if (isset($_POST[$field])) {
-                update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
-            } elseif ($field === 'why_content') {
+            if ($field === 'why_content' && isset($_POST[$field])) {
                 update_post_meta($post_id, $field, wp_kses_post($_POST[$field]));
+            } elseif (isset($_POST[$field])) {
+                update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
             }
         }
     }

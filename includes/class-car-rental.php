@@ -14,7 +14,7 @@ class Car_Rental {
     public function register_cars_post_type() {
         register_post_type( 'cars', array(
 			'label'                 => __( 'Car', 'car-rental-cmc' ),
-			'description'           => __( 'Car Description', 'car-rental-cmc' ),
+// 			'description'           => __( 'Car Description', 'car-rental-cmc' ),
 			'labels'                => array(
 				'name'                  => _x( 'Cars', 'Post Type General Name', 'car-rental-cmc' ),
 				'singular_name'         => _x( 'Car', 'Post Type Singular Name', 'car-rental-cmc' ),
